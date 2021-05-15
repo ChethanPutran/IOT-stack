@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>IOT</title>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        loaddata();
+
+        function loaddata() {
+          var url = "";
+          $.getJSON(url, function (_data) {
+            var data = _data;
+            var humidity =
+              data["weather"][Object.keys(data["weather"]).length - 1]["hum"];
+            var temperature =
+              data["weather"][Object.keys(data["weather"]).length - 1]["temp"];
+
+            document.getElementById("temperature").innerHTML =
+              "<img src='temp.png'>";
+            document.getElementById("humidity").innerHTML =
+              "<img src='hum.png'>";
+          });
+        }
+
+        window.setInterval(function () {
+          loaddata();
+        }, 5000);
+      };
+    </script>
+  </body>
+</html>
