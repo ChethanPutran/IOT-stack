@@ -13,9 +13,9 @@ if(isset($_GET['id'])){
     require_once($filepath."/db_connect.php");
 
     //Connecting to database
-    $db = new DbConnect();
+    $con = new DbConnect();
 
-    $result = mysql_query("SELECT * FROM weather WHERE id='$id'") or die(mysql_error());
+    $result = mysql_query($con,"SELECT * FROM lights WHERE id='$id'") or die(mysql_error($con));
 
     if(!empty($result)){
 
@@ -23,18 +23,18 @@ if(isset($_GET['id'])){
         if(mysql_num_rows($result)>0){
             
             //Creating array for json response
-            $response["weather"] = array();
+            $response["lights"] = array();
 
             //Storing all data from the array
             while($row = mysql_fetch_array($result)){
 
-            $weather = array();      
+            $lights = array();      
         
-            $weather['id'] = $row['id'];
-            $weather['temp'] = $row['temp'];
-            $weather['hum'] = $row['hum'];
+            $lights['id'] = $row['id'];
+            $lights['name'] = $row['name'];
+            $lights['status'] = $row['status'];
 
-            array_push($response["weather"],$weather);
+            array_push($response["lights"],$lights);
 
             }
 

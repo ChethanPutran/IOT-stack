@@ -5,33 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>IOT</title>
+    <title>Document</title>
   </head>
   <body>
+    <form method="GET" action="">
+      <button type="button" id="LED1-on">LED1 ON</button>
+      <button type="button" id="LED1-off">LED1 OFF</button>
+      <br />
+      <button type="button" id="LED2-on">LED2 ON</button>
+      <button type="button" id="LED2-off">LED2 OFF</button>
+      <br />
+      <button type="button" id="LED3-on">LED3 ON</button>
+      <button type="button" id="LED3-off">LED3 OFF</button>
+      <br />
+    </form>
     <script>
-      window.onload = function () {
-        loaddata();
-
-        function loaddata() {
-          var url = "";
-          $.getJSON(url, function (_data) {
-            var data = _data;
-            var humidity =
-              data["weather"][Object.keys(data["weather"]).length - 1]["hum"];
-            var temperature =
-              data["weather"][Object.keys(data["weather"]).length - 1]["temp"];
-
-            document.getElementById("temperature").innerHTML =
-              "<img src='temp.png'>";
-            document.getElementById("humidity").innerHTML =
-              "<img src='hum.png'>";
+      document.getElementById("LED1-on").addEventListener("click", function () {
+        var url =
+          "https://www.caarts.tech/appliances/lights/control.php?id=1&status=on";
+        $.getJSON(url, function (data) {
+          console.log(data);
+        });
+      });
+      document
+        .getElementById("LED1-off")
+        .addEventListener("click", function () {
+          var url =
+            "https://www.caarts.tech/appliances/lights/control.php?id=1&status=off";
+          $.getJSON(url, function (data) {
+            console.log(data);
           });
-        }
-
-        window.setInterval(function () {
-          loaddata();
-        }, 5000);
-      };
+        });
+      document.getElementById("LED2-on").addEventListener("click", function () {
+        var url =
+          "https://www.caarts.tech/appliances/lights/control.php?id=2&status=on";
+        $.getJSON(url, function (data) {
+          console.log(data);
+        });
+      });
+      document
+        .getElementById("LED2-off")
+        .addEventListener("click", function () {
+          var url =
+            "https://www.caarts.tech/appliances/lights/control.php?id=2&status=off";
+          $.getJSON(url, function (data) {
+            console.log(data);
+          });
+        });
+      document.getElementById("LED3-on").addEventListener("click", function () {
+        var url =
+          "https://www.caarts.tech/appliances/lights/control.php?id=3&status=on";
+        $.getJSON(url, function (data) {
+          console.log(data);
+        });
+      });
+      document
+        .getElementById("LED3-off")
+        .addEventListener("click", function () {
+          var url =
+            "https://www.caarts.tech/appliances/lights/control.php?id=3&status=off";
+          $.getJSON(url, function (data) {
+            console.log(data);
+          });
+        });
     </script>
   </body>
 </html>

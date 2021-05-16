@@ -7,8 +7,8 @@ header("Content-Type:application/json;charset=UTF-8");
 $response = array();
 
 //Validation
-if(isset($_GET['name']) && isset($_GET['status'])){
-    $name = $_GET['name'];
+if(isset($_GET['id']) && isset($_GET['status'])){
+    $id = $_GET['id'];
     $status = $_GET['status'];
 
     //Include database connect class
@@ -16,14 +16,16 @@ if(isset($_GET['name']) && isset($_GET['status'])){
     require_once($filepath."/db_connect.php");
 
     //Connecting to database
-    $con = new DbConnect();
-    $result = mysqli_query($con,"INSERT INTO lights(name,status) VALUES('$name','$status')");
+    $db = new DbConnect();
+
+  
+    $result = mysql_query("UPDATE lights SET status='$status' WHERE id='$id'");
 
     //Checking
     if($result){
         //Insertion successfull
         $response['success'] = 1;
-        $response['message'] = "Data uploaded successfully.";
+        $response['message'] = "Data updated successfully.";
 
         //Show json response
         echo json_encode($response);
@@ -31,7 +33,7 @@ if(isset($_GET['name']) && isset($_GET['status'])){
     }else{
         //Failed to insert data
         $response['success'] = 0;
-        $response['message'] = "Unable to uploade the data!";
+        $response['message'] = "Unable to update the data!";
 
         //Show json response
         echo json_encode($response);

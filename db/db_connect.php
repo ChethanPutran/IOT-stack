@@ -15,11 +15,8 @@ class DbConnect{
         require_once($filepath."/dbconfig.php");
 
         //Connecting to mysql database
-        $con = mysql_connect(DB_SERVER,DB_USER,DB_PASSWORD) or die(mysql_error());
-
-        //Seleting database
-        $db = mysql_selct_db(DB_DATABASE) or die(mysql_error());
-
+        $con = mysqli_connect(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE) or die(mysqli_connect_errno());
+        // $db = $con->select_db(DB_DATABASE) or die(mysql_error($con));
         return $con;
 
     }

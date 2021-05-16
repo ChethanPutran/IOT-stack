@@ -1,0 +1,71 @@
+pass:Rockjokes@222
+
+sudo apt update
+sudo apt install apache2
+sudo ufw app list
+
+#If not Apache
+#create below file and save
+nano /etc/ufw/applications.d/apache2-utils.ufw.profile 
+
+[Apache]
+title=Web Server
+description=Apache v2 is the next generation of the omnipresent Apache web server.
+ports=80/tcp
+
+[Apache Secure]
+title=Web Server (HTTPS)
+description=Apache v2 is the next generation of the omnipresent Apache web server.
+ports=443/tcp
+
+[Apache Full]
+title=Web Server (HTTP,HTTPS)
+description=Apache v2 is the next generation of the omnipresent Apache web server.
+ports=80,443/tcp
+
+//////
+sudo ufw allow 'Apache'
+sudo ufw status
+sudo systemctl status apache2
+sudo mkdir /var/www/iot
+sudo chown -R $USER:$USER /var/www/iot
+sudo chmod -R 755 /var/www/iot
+nano /var/www/your_domain/index.html    //optional
+
+//create file
+sudo nano /etc/apache2/sites-available/your_domain.conf
+//Paste the following
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName your_domain
+    ServerAlias your_domain
+    DocumentRoot /var/www/your_domain
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+sudo a2ensite iot.conf
+sudo a2dissite 000-default.conf
+sudo apache2ctl configtest
+sudo systemctl restart apache2
+
+//Install MY-SQL
+sudo apt-get install mysql-server
+mysql_secure_installation
+
+
+//Installing php
+sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
+sudo nano /etc/apache2/mods-enabled/dir.conf
+sudo systemctl restart apache2
+
+//Installing php modules
+apt-cache search php- | less
+apt-cache show package_name
+apt-cache show php-cli
+sudo apt-get install php-cli
+sudo nano /var/www/html/info.php
+
+#Installing phpmyadmin
+sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
