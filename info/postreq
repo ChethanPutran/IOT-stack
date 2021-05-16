@@ -1,0 +1,57 @@
+#include <ESP8266WiFi.h>
+
+String apiKey = "1EYZIS5OCRJSKZHG";	// replace with your channel’s thingspeak API key,
+
+/*Put your SSID & Password*/
+const char* ssid = "ssid";		// Enter SSID here
+const char* password = "password";	// Enter Password here
+
+const char* server = "api.thingspeak.com";
+int Sample;
+
+WiFiClient client;
+
+void setup() {
+  Serial.begin(9600);
+  delay(1000);
+
+  Serial.println("Connecting to ");
+  Serial.println(ssid);
+
+  //connect to your local wi-fi network
+  WiFi.begin(ssid, password);
+
+  //check wi-fi is connected to wi-fi network
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi connected");
+}
+
+void loop() 
+{
+  if (client.connect(server,80))     // "184.106.153.149" or api.thingspeak.com
+  { 
+    String postStr = apiKey;
+    postStr +="&field1=";
+    postStr += String(Sample++);
+    postStr += "\r\n\r\n";
+
+    client.print("POST /update HTTP/1.1\n");
+    client.print("Host: api.thingspeak.com\n");
+    client.print("Connection: close\n");
+    client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n");
+    client.print("Content-Type: application/x-www-form-urlencoded\n");
+    client.print("Content-Length: ");
+    client.print(postStr.length());
+    client.print("\n\n");
+    client.print(postStr);
+  }
+  client.stop();
+
+  Serial.println("Waiting…");       // thingspeak needs minimum 15 sec delay between updates
+
+  delay(20000);
+}
