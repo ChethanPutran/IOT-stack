@@ -28,18 +28,16 @@ if(!empty($_GET['id'])){
         if(mysqli_num_rows($result)>0){
             
             //Creating array for json response
-            $response["lights"] = array();
+            $response = array();
 
             //Storing all data from the array
             while($row = mysqli_fetch_array($result)){
 
-            $lights = array();      
-        
-            $lights['id'] = $row['id'];
-            $lights['name'] = $row['name'];
-            $lights['status'] = $row['status'];
+            //$lights = array();      
+              //$lights['name'] = $row['name'];
+            $response['status'] = $row['status'];
 
-            array_push($response["lights"],$lights);
+            //array_push($response["lights"],$lights);
 
             }
 
@@ -62,13 +60,10 @@ if(!empty($_GET['id'])){
         $response = array();
         //Failed to insert data
         $response['success'] = 0;
-        $response['message'] = "Item not found!";
+      
 
         //Show json response
         echo json_encode($response);
 
     } 
 }
-
-
-?>

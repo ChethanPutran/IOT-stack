@@ -1,4 +1,5 @@
 <?php
+
 class DbConnect{
 
     function __construct(){
@@ -23,7 +24,7 @@ class DbConnect{
 
     //Closing the connection
     function close(){
-        mysql_close();
+        mysqli_close();
     }
 
 }

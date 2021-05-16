@@ -1,8 +1,9 @@
 #include <WiFi.h>
-const char hostAdd[] = "";
+const char hostAdd[] = "http://caarts.tech";
 char ssid[]= "TP-Link_0A48";
 char password[] = "Homewifi222";
 int count = 0;
+
 
 void setup() {
   Serial.begin(9600);
@@ -50,18 +51,18 @@ void loop() {
       }
 
     if(count==0){
-      url = "appliances/light/control.php?id=1";
+      url = "/appliances/lights/control.php?id=1";
       count = count + 1;
       Serial.println("Checking light1...");
 
     
     }else if(count ==1){
-        url = "appliances/light/control.php?id=2";
+        url = "/appliances/lights/control.php?id=2";
       count = count + 1;
       Serial.println("Checking light2...");
     }
     else if(count ==2){
-        url = "appliances/light/control.php?id=3";
+        url = "/appliances/lights/control.php?id=3";
       count = count + 1;
       Serial.println("Checking light3...");
     }
@@ -89,9 +90,10 @@ void loop() {
         }
         else if(section == "json"){
             section = "ignore";
+
             String result = line.substring(1);
-
-
+            Serial.println(result);
+            
             //Parsing JSON data
             int size = result.length() + 1;
             char json[size];

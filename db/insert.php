@@ -1,4 +1,6 @@
 <?php 
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type:application/json;charset=UTF-8");
@@ -7,7 +9,8 @@ header("Content-Type:application/json;charset=UTF-8");
 $response = array();
 
 //Validation
-if(isset($_GET['name']) && isset($_GET['status'])){
+if(!(empty($_GET['name']) && empty($_GET['status']))){
+
     $name = $_GET['name'];
     $status = $_GET['status'];
 
@@ -16,7 +19,9 @@ if(isset($_GET['name']) && isset($_GET['status'])){
     require_once($filepath."/db_connect.php");
 
     //Connecting to database
-    $con = new DbConnect();
+    $connection = new DbConnect();
+    $con = $connection->connect();
+    
     $result = mysqli_query($con,"INSERT INTO lights(name,status) VALUES('$name','$status')");
 
     //Checking

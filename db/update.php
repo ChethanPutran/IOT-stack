@@ -1,4 +1,6 @@
 <?php 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type:application/json;charset=UTF-8");
@@ -7,7 +9,7 @@ header("Content-Type:application/json;charset=UTF-8");
 $response = array();
 
 //Validation
-if(isset($_GET['id']) && isset($_GET['status'])){
+if(!(empty($_GET['id']) && empty($_GET['status']))){
     $id = $_GET['id'];
     $status = $_GET['status'];
 
@@ -15,11 +17,12 @@ if(isset($_GET['id']) && isset($_GET['status'])){
     $filepath = realpath(dirname(__FILE__));
     require_once($filepath."/db_connect.php");
 
-    //Connecting to database
-    $db = new DbConnect();
+  //Connecting to database
+    $connection = new DbConnect();
+    $con = $connection->connect();
 
   
-    $result = mysql_query("UPDATE lights SET status='$status' WHERE id='$id'");
+    $result = mysqli_query($con,"UPDATE lights SET status='$status' WHERE id='$id'");
 
     //Checking
     if($result){
@@ -39,6 +42,13 @@ if(isset($_GET['id']) && isset($_GET['status'])){
         echo json_encode($response);
 
     }
+}else{
+    $response['success'] = 0;
+    $response['message'] = "Parameters not found!";
+      //Show json response
+        echo json_encode($response);
+
+
 }
 
 

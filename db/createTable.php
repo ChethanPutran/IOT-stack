@@ -8,7 +8,10 @@
     require_once($filepath."/db_connect.php");
 
     //Connecting to database
-    $con = new DbConnect();
+      //Connecting to database
+    $connection = new DbConnect();
+    $con = $connection->connect();
+    
     $result = mysqli_query($con,$querry);
     if($result){
         echo "Table created successfully.";
